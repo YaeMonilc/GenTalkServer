@@ -1,0 +1,29 @@
+plugins {
+    id 'com.github.johnrengelman.shadow' version '2.0.4'
+    id 'java'
+}
+
+group 'cc.kocho'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'cc.kocho.Main'
+    }
+}
+
+dependencies {
+    implementation 'com.google.code.gson:gson:2.9.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.0'
+    implementation 'io.javalin:javalin:4.6.4'
+    implementation group: 'org.slf4j', name: 'slf4j-simple', version: '1.8.0-beta4'
+}
+
+test {
+    useJUnitPlatform()
+}
