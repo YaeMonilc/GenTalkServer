@@ -1,8 +1,9 @@
-package cc.kocho;
+package cc.kocho.handler;
 
+import cc.kocho.server.Server;
 import io.javalin.Javalin;
 
-public class Http implements Server{
+public class Http implements Server {
     @Override
     public void start(Javalin app) {
         app.get("/", ctx -> {

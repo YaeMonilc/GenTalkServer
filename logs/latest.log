@@ -1,0 +1,59 @@
+2022-08-05T16:49:09Z <WARN:cc.kocho.Main> 123123
+2022-08-05T16:49:09Z <INFO:io.javalin.core.util.JavalinLogger> 
+       __                      __ _            __ __
+      / /____ _ _   __ ____ _ / /(_)____      / // /
+ __  / // __ `/| | / // __ `// // // __ \    / // /_
+/ /_/ // /_/ / | |/ // /_/ // // // / / /   /__  __/
+\____/ \__,_/  |___/ \__,_//_//_//_/ /_/      /_/
+
+          https://javalin.io/documentation
+
+2022-08-05T16:49:09Z <INFO:io.javalin.core.util.JavalinLogger> Starting Javalin ...
+2022-08-05T16:49:09Z <INFO:io.javalin.core.util.JavalinLogger> You are running Javalin 4.6.4 (released July 8, 2022).
+2022-08-05T16:49:09Z <INFO:io.javalin.core.util.JavalinLogger> Listening on http://0.0.0.0:1919/
+2022-08-05T16:49:09Z <INFO:io.javalin.core.util.JavalinLogger> Javalin started in 262ms \o/
+2022-08-05T16:49:55Z <WARN:cc.kocho.Main> 123123123123131
+2022-08-05T16:49:55Z <INFO:io.javalin.core.util.JavalinLogger> 
+       __                      __ _            __ __
+      / /____ _ _   __ ____ _ / /(_)____      / // /
+ __  / // __ `/| | / // __ `// // // __ \    / // /_
+/ /_/ // /_/ / | |/ // /_/ // // // / / /   /__  __/
+\____/ \__,_/  |___/ \__,_//_//_//_/ /_/      /_/
+
+          https://javalin.io/documentation
+
+2022-08-05T16:49:55Z <INFO:io.javalin.core.util.JavalinLogger> Starting Javalin ...
+2022-08-05T16:49:55Z <INFO:io.javalin.core.util.JavalinLogger> You are running Javalin 4.6.4 (released July 8, 2022).
+2022-08-05T16:49:56Z <INFO:io.javalin.core.util.JavalinLogger> Listening on http://0.0.0.0:1919/
+2022-08-05T16:49:56Z <INFO:io.javalin.core.util.JavalinLogger> Javalin started in 257ms \o/
+2022-08-05T16:50:43Z <WARN:cc.kocho.Main> 123123123123131
+2022-08-05T16:50:43Z <INFO:io.javalin.core.util.JavalinLogger> 
+       __                      __ _            __ __
+      / /____ _ _   __ ____ _ / /(_)____      / // /
+ __  / // __ `/| | / // __ `// // // __ \    / // /_
+/ /_/ // /_/ / | |/ // /_/ // // // / / /   /__  __/
+\____/ \__,_/  |___/ \__,_//_//_//_/ /_/      /_/
+
+          https://javalin.io/documentation
+
+2022-08-05T16:50:43Z <INFO:io.javalin.core.util.JavalinLogger> Starting Javalin ...
+2022-08-05T16:50:43Z <INFO:io.javalin.core.util.JavalinLogger> You are running Javalin 4.6.4 (released July 8, 2022).
+2022-08-05T16:50:43Z <INFO:io.javalin.core.util.JavalinLogger> Listening on http://0.0.0.0:1919/
+2022-08-05T16:50:43Z <INFO:io.javalin.core.util.JavalinLogger> Javalin started in 315ms \o/
+2022-08-05T16:50:54Z <WARN:cc.kocho.Main> 123123123123131
+2022-08-05T16:50:54Z <WARN:cc.kocho.Main> 123123123123131
+2022-08-05T16:50:54Z <WARN:cc.kocho.Main> 123123123123131
+2022-08-05T16:50:54Z <WARN:cc.kocho.Main> 123123123123131
+2022-08-05T16:50:54Z <INFO:io.javalin.core.util.JavalinLogger> 
+       __                      __ _            __ __
+      / /____ _ _   __ ____ _ / /(_)____      / // /
+ __  / // __ `/| | / // __ `// // // __ \    / // /_
+/ /_/ // /_/ / | |/ // /_/ // // // / / /   /__  __/
+\____/ \__,_/  |___/ \__,_//_//_//_/ /_/      /_/
+
+          https://javalin.io/documentation
+
+2022-08-05T16:50:54Z <INFO:io.javalin.core.util.JavalinLogger> Starting Javalin ...
+2022-08-05T16:50:54Z <INFO:io.javalin.core.util.JavalinLogger> You are running Javalin 4.6.4 (released July 8, 2022).
+2022-08-05T16:50:54Z <INFO:io.javalin.core.util.JavalinLogger> Listening on http://0.0.0.0:1919/
+2022-08-05T16:50:54Z <INFO:io.javalin.core.util.JavalinLogger> Javalin started in 280ms \o/

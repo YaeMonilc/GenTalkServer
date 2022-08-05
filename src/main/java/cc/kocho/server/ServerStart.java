@@ -1,4 +1,4 @@
-package cc.kocho;
+package cc.kocho.server;
 
 import io.javalin.Javalin;
 
