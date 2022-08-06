@@ -6,6 +6,8 @@ import dev.morphia.annotations.Id;
 import dev.morphia.annotations.Indexed;
 import org.bson.types.ObjectId;
 
+import java.time.Instant;
+
 @Entity(value = "user", useDiscriminator = false)
 public class User {
 
@@ -15,18 +17,14 @@ public class User {
     private final String account;
     private final String password;
     private final String name;
-    private final String token;
     private boolean online = false;
+    private final long createTime;
 
-    public User(String account,String password,String name,String token){
+    public User(String account,String password,String name){
         this.account = account;
         this.password = password;
         this.name = name;
-        this.token = token;
-    }
-
-    public String getToken() {
-        return token;
+        this.createTime = (int) Instant.now().getEpochSecond();
     }
 
     public String getAccount() {

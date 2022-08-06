@@ -10,4 +10,11 @@ public class HandleMessage extends Basic{
         this.text = text;
     }
 
+    public String getText() {
+        return text;
+    }
+
+    public String getAccount() {
+        return account;
+    }
 }

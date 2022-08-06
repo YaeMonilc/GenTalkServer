@@ -1,6 +1,8 @@
 package cc.kocho;
 
 
+import cc.kocho.database.MessageRecord;
+import cc.kocho.database.Token;
 import cc.kocho.database.User;
 import cc.kocho.database.UserWsContext;
 import cc.kocho.handler.Http;
@@ -18,6 +20,7 @@ import dev.morphia.mapping.MapperOptions;
 import dev.morphia.query.Query;
 import dev.morphia.query.experimental.filters.Filters;
 import io.javalin.Javalin;
+import io.javalin.core.JavalinConfig;
 import org.slf4j.LoggerFactory;
 
 public class Main {
@@ -30,7 +33,7 @@ public class Main {
     private static final Logger logger = (Logger) LoggerFactory.getLogger(Main.class);
 
     private static final Class<?>[] mappedClasses = new Class<?>[] {
-            User.class
+            User.class, MessageRecord.class, Token.class
     };
 
     public static void main(String[] args) {
@@ -42,7 +45,11 @@ public class Main {
 
         reset();
 
-        app = Javalin.create().start(Config.Host, Config.port);
+        app = Javalin.create();
+        JavalinConfig javalinConfig = new JavalinConfig();
+        javalinConfig.asyncRequestTimeout = Long.MAX_VALUE;
+        app._conf = javalinConfig;
+        app.start(Config.Host, Config.port);
 
         ServerStart.start(new Http(),app);
         ServerStart.start(new WebSocket(),app);

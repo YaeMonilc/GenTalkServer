@@ -2,6 +2,8 @@ package cc.kocho.handler;
 
 import cc.kocho.Main;
 import cc.kocho.Util;
+import cc.kocho.database.MessageRecord;
+import cc.kocho.database.Token;
 import cc.kocho.database.User;
 import cc.kocho.database.UserWsContext;
 import cc.kocho.message.HandleMessage;
@@ -12,26 +14,22 @@ import dev.morphia.query.experimental.filters.Filters;
 import io.javalin.websocket.WsMessageContext;
 
 import java.util.List;
-import java.util.Objects;
 
 public class WebSocketMessageEventHandle {
 
     public static void message(WsMessageContext wsMessageContext){
         Gson gson = new Gson();
         Message message = gson.fromJson(Util.Encryption.decode(wsMessageContext.message()), Message.class);
-        Query<User> userQuery = Main.datastore.find(User.class).filter(Filters.eq("token",message.token));
+        message.setText(Util.Encryption.decode(message.getText()));
+        List<UserWsContext> wsContexts = WebSocket.userList.stream().filter(userWsContext -> userWsContext.getWsContext().session == wsMessageContext.session).toList();
+        Query<Token> tokenQuery = Main.datastore.find(Token.class).filter(Filters.eq("token",wsContexts.get(0).getToken()));
+        Query<User> userQuery = Main.datastore.find(User.class).filter(Filters.eq("account",tokenQuery.first().getAccount()));
+        User user = userQuery.first();
         if (userQuery.count() < 1) {
             return;
         }
-        User user = userQuery.first();
-        List<UserWsContext> wsContexts = WebSocket.userList.stream().filter(userWsContext -> userWsContext.getWsContext().session == wsMessageContext.session).toList();
-        if (wsContexts.size() < 1){
-            return;
-        }
-        if (!Objects.equals(wsContexts.get(0).getToken(), user.getToken())){
-            return;
-        }
-        String handleMessage = gson.toJson(new HandleMessage(user.getAccount(), user.getToken()));
+        String handleMessage = gson.toJson(new HandleMessage(user.getAccount(), message.getText()));
+        Main.datastore.save(new MessageRecord(tokenQuery.first().getToken(),Util.Encryption.encode(message.getText())));
         WebSocket.userList.forEach(userWsContext -> {
             Util.WebSocket.sendMessage(userWsContext.getWsContext(),handleMessage);
         });

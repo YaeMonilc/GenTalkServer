@@ -6,4 +6,6 @@ public class Config {
     public static String databaseUri = "mongodb://localhost:27017";
     public static String databaseName = "GenTalk";
 
+    public static long expirationTime = 172800;
+
 }

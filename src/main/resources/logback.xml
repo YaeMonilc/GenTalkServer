@@ -4,7 +4,7 @@
         <pattern>%d{HH:mm:ss} &lt;%highlight(%level):%white(%class{0})&gt; %msg%n</pattern>
     </encoder>
 </appender>
-    <root level="INFO">
+    <root level="DEBUG">
         <appender-ref ref="STDOUT"/>
     </root>
 </configuration>

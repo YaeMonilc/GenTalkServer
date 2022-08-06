@@ -1,13 +1,21 @@
 package cc.kocho;
 
+import ch.qos.logback.classic.Logger;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import io.javalin.http.Context;
 import io.javalin.websocket.WsContext;
+import org.slf4j.LoggerFactory;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import java.util.Random;
 
 public class Util {
+
+    private final static Logger logger = (Logger) LoggerFactory.getLogger(Util.class);
 
     public static String getRandomString(int length){
         String str="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -19,7 +27,6 @@ public class Util {
         }
         return sb.toString();
     }
-
     public static boolean checkMessage(String jsonStr) {
         JsonElement jsonElement;
         try {
@@ -36,9 +43,30 @@ public class Util {
         return true;
     }
 
+    public static String md5(String data) {
+        StringBuilder sb = new StringBuilder();
+        try {
+            MessageDigest md = MessageDigest.getInstance("md5");
+            byte[] md5 = md.digest(data.getBytes(StandardCharsets.UTF_8));
+
+            for (byte b : md5) {
+                sb.append(Integer.toHexString(b & 0xff));
+            }
+        } catch (NoSuchAlgorithmException e) {
+            logger.error(e.toString());
+        }
+        return sb.toString();
+    }
+
     public static class WebSocket{
         public static void sendMessage(WsContext wsContext, String text){
             wsContext.send(Util.Encryption.encode(text));
+        }
+    }
+
+    public static class Http{
+        public static void result(Context context, String text){
+            context.result(Util.Encryption.encode(text));
         }
     }
 

@@ -2,6 +2,7 @@ package cc.kocho.handler;
 
 import cc.kocho.Main;
 import cc.kocho.Util;
+import cc.kocho.database.Token;
 import cc.kocho.database.User;
 import cc.kocho.database.UserWsContext;
 import cc.kocho.message.Basic;
@@ -13,6 +14,7 @@ import dev.morphia.query.experimental.filters.Filters;
 import io.javalin.Javalin;
 import org.slf4j.LoggerFactory;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,16 +29,19 @@ public class WebSocket implements Server {
         app.ws("/room/{token}", wsConfig -> {
             wsConfig.onConnect(wsConnectContext -> {
                 String token = wsConnectContext.pathParam("token");
-                Query<User> userQuery = Main.datastore.find(User.class).filter(Filters.eq("token",token));
-                if(userQuery.count() == 0){
+                Query<Token> tokenQuery = Main.datastore.find(Token.class).filter(Filters.eq("token", token),
+                        Filters.gt("expirationTime",(int) Instant.now().getEpochSecond()));
+                if(tokenQuery.count() == 0){
                     wsConnectContext.send("TokenCheckFailed");
                     wsConnectContext.session.close();
-                }else {
+                }else{
+                    Query<User> userQuery = Main.datastore.find(User.class).filter(Filters.eq("account",tokenQuery.first().getAccount()));
                     User user = userQuery.first();
+                    Token UserToken = tokenQuery.first();
                     user.setOnline(true);
                     Main.datastore.save(user);
-                    userList.add(new UserWsContext(user.getAccount(),user.getPassword(),user.getName(), user.getToken(), wsConnectContext));
-                    logger.info("用户 {} 已连接，Token为: {}",user.getAccount(),user.getToken());
+                    userList.add(new UserWsContext(user.getAccount(),user.getPassword(),user.getName(), wsConnectContext,UserToken.getToken()));
+                    logger.info("用户 {} 已连接，Token为: {}",user.getAccount(),UserToken.getToken());
                 }
             });
             wsConfig.onMessage(wsMessageContext -> {
@@ -47,8 +52,8 @@ public class WebSocket implements Server {
                 }
                 String data;
                 try {
-                            data = Util.Encryption.decode(wsMessageContext.message());
-                        }catch (Exception e){
+                    data = Util.Encryption.decode(wsMessageContext.message());
+                }catch (Exception e){
                     logger.error(e.toString());
                     return;
                 }
@@ -63,7 +68,7 @@ public class WebSocket implements Server {
             });
             wsConfig.onClose(wsMessageContext ->{
                 UserWsContext user = userList.stream().filter(userWsContext -> userWsContext.getWsContext().session == wsMessageContext.session).toList().get(0);
-                Query<User> userQuery = Main.datastore.find(User.class).filter(Filters.eq("token",user.getToken()));
+                Query<User> userQuery = Main.datastore.find(User.class).filter(Filters.eq("account",user.getAccount()));
                 User databaseUser = userQuery.first();
                 databaseUser.setOnline(false);
                 Main.datastore.save(databaseUser);
