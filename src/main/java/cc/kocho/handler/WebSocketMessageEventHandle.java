@@ -8,14 +8,18 @@ import cc.kocho.database.User;
 import cc.kocho.database.UserWsContext;
 import cc.kocho.message.HandleMessage;
 import cc.kocho.message.Message;
+import ch.qos.logback.classic.Logger;
 import com.google.gson.Gson;
 import dev.morphia.query.Query;
 import dev.morphia.query.experimental.filters.Filters;
 import io.javalin.websocket.WsMessageContext;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
 public class WebSocketMessageEventHandle {
+
+    private static final Logger logger = (Logger) LoggerFactory.getLogger(WebSocketMessageEventHandle.class);
 
     public static void message(WsMessageContext wsMessageContext){
         Gson gson = new Gson();
@@ -30,6 +34,7 @@ public class WebSocketMessageEventHandle {
         }
         String handleMessage = gson.toJson(new HandleMessage(user.getAccount(), message.getText()));
         Main.datastore.save(new MessageRecord(tokenQuery.first().getToken(),Util.Encryption.encode(message.getText())));
+        logger.info("正在分发账号 {} 的消息 {}",tokenQuery.first().getAccount(),message.getText());
         WebSocket.userList.forEach(userWsContext -> {
             Util.WebSocket.sendMessage(userWsContext.getWsContext(),handleMessage);
         });

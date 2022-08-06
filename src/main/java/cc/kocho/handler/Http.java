@@ -39,16 +39,20 @@ public class Http implements Server {
         app.get("/login/{account}/{password}", ctx -> {
             String account = ctx.pathParam("account");
             String password = Util.md5(ctx.pathParam("password"));
-            Query<User> userQuery = Main.datastore.find(User.class).filter(Filters.eq("account",account));
+            logger.info("账号 {} 正在尝试获取Token",account);
+            Query<User> userQuery = Main.datastore.find(User.class).filter(Filters.eq("account",account),Filters.eq("password",password));
             if (userQuery.count() == 0){
-                Util.Http.result(ctx,gson.toJson(new HttpMessage("Error","AccountNotExist")));
+                logger.info("账号 {} 获取Token失败,密码(MD5): {}",account,password);
+                Util.Http.result(ctx,gson.toJson(new HttpMessage("Error","AccountNotExistOrPasswordError")));
                 return;
             }
             if (userQuery.first().isOnline()){
+                logger.info("账号 {} 获取Token失败,账号已在线",account);
                 Util.Http.result(ctx,gson.toJson(new HttpMessage("Error","AccountIsOnline")));
                 return;
             }
-            Token token = new Token(userQuery.first());
+            Token token = new Token(userQuery.first(),ctx.ip());
+            logger.info("账号 {} 成功获取Token: {}",token.getAccount(),token.getToken());
             Main.datastore.save(token);
             Util.Http.result(ctx,token.getToken());
         });

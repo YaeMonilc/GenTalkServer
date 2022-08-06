@@ -1,10 +1,10 @@
 <configuration scan="true" scanPeriod="60 seconds" debug="false">
 <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
     <encoder>
-        <pattern>%d{HH:mm:ss} &lt;%highlight(%level):%white(%class{0})&gt; %msg%n</pattern>
+        <pattern>%d{HH:mm:ss.SSS} &lt;%highlight(%level):%white(%class{0})&gt; %msg%n</pattern>
     </encoder>
 </appender>
-    <root level="DEBUG">
+    <root level="INFO">
         <appender-ref ref="STDOUT"/>
     </root>
 </configuration>

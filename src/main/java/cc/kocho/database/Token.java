@@ -7,6 +7,8 @@ import dev.morphia.annotations.Id;
 import org.bson.types.ObjectId;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity(value = "token", useDiscriminator = false)
 public class Token {
@@ -14,14 +16,20 @@ public class Token {
     private ObjectId id;
     private String token;
     private String account;
+    private List<IpRecord> ip = new ArrayList<>();
     private long createTime;
     private long expirationTime;
 
-    public Token(User user){
+    public Token(User user,String ip){
         this.account = user.getAccount();
         this.token = Util.getRandomString(15);
         this.createTime = (int) Instant.now().getEpochSecond();
         this.expirationTime = this.createTime + Config.expirationTime;
+        this.ip.add(new IpRecord(ip));
+    }
+
+    public void addIp(String ip) {
+        this.ip.add(new IpRecord(ip));
     }
 
     public String getToken() {
