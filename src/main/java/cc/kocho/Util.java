@@ -60,12 +60,13 @@ public class Util {
 
     public static class WebSocket{
         public static void sendMessage(WsContext wsContext, String text){
-            wsContext.send(Util.Encryption.encode(text));
+            wsContext.send(Encryption.encode(text));
         }
     }
 
     public static class Http{
         public static void result(Context context, String text){
+            context.header("Access-Control-Allow-Origin","*");
             context.result(Util.Encryption.encode(text));
         }
     }

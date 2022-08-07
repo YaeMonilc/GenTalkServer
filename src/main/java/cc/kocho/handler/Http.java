@@ -46,11 +46,11 @@ public class Http implements Server {
                 Util.Http.result(ctx,gson.toJson(new HttpMessage("Error","AccountNotExistOrPasswordError")));
                 return;
             }
-            if (userQuery.first().isOnline()){
+            /*if (userQuery.first().isOnline()){
                 logger.info("账号 {} 获取Token失败,账号已在线",account);
                 Util.Http.result(ctx,gson.toJson(new HttpMessage("Error","AccountIsOnline")));
                 return;
-            }
+            }*/
             Token token = new Token(userQuery.first(),ctx.ip());
             logger.info("账号 {} 成功获取Token: {}",token.getAccount(),token.getToken());
             Main.datastore.save(token);

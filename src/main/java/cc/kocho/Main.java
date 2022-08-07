@@ -48,6 +48,7 @@ public class Main {
         app = Javalin.create();
         JavalinConfig javalinConfig = new JavalinConfig();
         javalinConfig.asyncRequestTimeout = Long.MAX_VALUE;
+        javalinConfig.enableCorsForAllOrigins();
         app._conf = javalinConfig;
         app.start(Config.Host, Config.port);
 

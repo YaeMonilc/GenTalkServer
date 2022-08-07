@@ -32,7 +32,7 @@ public class WebSocketMessageEventHandle {
         if (userQuery.count() < 1) {
             return;
         }
-        String handleMessage = gson.toJson(new HandleMessage(user.getAccount(), message.getText()));
+        String handleMessage = gson.toJson(new HandleMessage(user.getAccount(), user.getName(), message.getText()));
         Main.datastore.save(new MessageRecord(tokenQuery.first().getToken(),Util.Encryption.encode(message.getText())));
         logger.info("正在分发账号 {} 的消息 {}",tokenQuery.first().getAccount(),message.getText());
         WebSocket.userList.forEach(userWsContext -> {
