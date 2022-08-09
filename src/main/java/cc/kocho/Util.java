@@ -10,7 +10,9 @@ import org.slf4j.LoggerFactory;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
 import java.util.Random;
 
 public class Util {
@@ -56,6 +58,23 @@ public class Util {
             logger.error(e.toString());
         }
         return sb.toString();
+    }
+
+    public class SensitiveWordCheck {
+        public static List<SensitiveWord> sensitiveWordList = new ArrayList<>();
+
+        public static int sensitiveWordNumber = 0;
+
+        public static String check(String word){
+            String handleWord = word;
+            for (SensitiveWord sensitiveWord : sensitiveWordList) {
+                if (handleWord.contains(sensitiveWord.sensitiveWord)){
+                    handleWord = handleWord.replaceAll(sensitiveWord.sensitiveWord,sensitiveWord.replaceWord);
+                }
+            }
+            return handleWord;
+        }
+
     }
 
     public static class WebSocket{

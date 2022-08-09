@@ -34,14 +34,14 @@ public class WebSocket implements Server {
                 Query<Token> tokenQuery = Main.datastore.find(Token.class).filter(Filters.eq("token", token),
                         Filters.gt("expirationTime",(int) Instant.now().getEpochSecond()));
                 if(tokenQuery.count() == 0){
-                    wsConnectContext.send("TokenCheckFailed");
+                    Util.WebSocket.sendMessage(wsConnectContext,"TokenCheckFailed");
                     wsConnectContext.session.close();
                 }else{
                     Query<User> userQuery = Main.datastore.find(User.class).filter(Filters.eq("account",tokenQuery.first().getAccount()));
                     User user = userQuery.first();
                     if (user.isOnline()){
                         UserWsContext onlineUser = userList.stream().filter(userWsContext -> Objects.equals(userWsContext.getAccount(), user.getAccount())).toList().get(0);
-                        Util.WebSocket.sendMessage(onlineUser.getWsContext(),Util.Encryption.encode(gson.toJson(new ServerMessage("ElsewhereLink",""))));
+                        Util.WebSocket.sendMessage(onlineUser.getWsContext(),gson.toJson(new ServerMessage("ElsewhereLink","")));
                         onlineUser.getWsContext().session.close();
                         logger.info("账号 {} 被挤下线",user.getAccount());
                         user.setOnline(false);
@@ -56,7 +56,7 @@ public class WebSocket implements Server {
             wsConfig.onMessage(wsMessageContext -> {
                 List<UserWsContext> user = userList.stream().filter(userWsContext -> userWsContext.getWsContext().session == wsMessageContext.session).toList();
                 if (user.size() < 1){
-                    wsMessageContext.send("Prohibit");
+                    Util.WebSocket.sendMessage(wsMessageContext,"Prohibit");
                     return;
                 }
                 String data;
@@ -72,6 +72,7 @@ public class WebSocket implements Server {
                 Basic basic = gson.fromJson(data, Basic.class);
                 switch (basic.event){
                     case "message" -> WebSocketMessageEventHandle.message(wsMessageContext);
+                    case "heartbeat" -> Util.WebSocket.sendMessage(wsMessageContext,"Times");
                     default -> {}
                 }
             });

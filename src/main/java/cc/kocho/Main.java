@@ -45,6 +45,11 @@ public class Main {
 
         reset();
 
+        Util.SensitiveWordCheck.sensitiveWordList.add(new SensitiveWord("傻逼", "小可爱"));
+        Util.SensitiveWordCheck.sensitiveWordList.add(new SensitiveWord("智障", "大聪明"));
+        Util.SensitiveWordCheck.sensitiveWordList.add(new SensitiveWord("日你妈", "哎嘿"));
+        Util.SensitiveWordCheck.sensitiveWordList.add(new SensitiveWord("你妈死了", "咋了"));
+
         app = Javalin.create();
         JavalinConfig javalinConfig = new JavalinConfig();
         javalinConfig.asyncRequestTimeout = Long.MAX_VALUE;
