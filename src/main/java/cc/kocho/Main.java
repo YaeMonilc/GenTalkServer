@@ -37,6 +37,10 @@ public class Main {
     };
 
     public static void main(String[] args) {
+
+        if(!args[0].equals(""))
+            Config.databaseUri.replaceAll("27017",args[0]);
+
         mongoClient = MongoClients.create(Config.databaseUri);
         MapperOptions mapperOptions = MapperOptions.builder()
                 .storeEmpties(true).storeNulls(false).build();
