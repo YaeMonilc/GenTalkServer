@@ -1,7 +1,9 @@
+<?xml version="1.0" encoding="GBK"?>
 <configuration scan="true" scanPeriod="60 seconds" debug="false">
 <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
     <encoder>
         <pattern>%d{HH:mm:ss.SSS} &lt;%highlight(%level):%white(%class{0})&gt; %msg%n</pattern>
+        <charset>GBK</charset>
     </encoder>
 </appender>
     <root level="INFO">

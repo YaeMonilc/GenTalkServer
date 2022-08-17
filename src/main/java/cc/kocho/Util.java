@@ -95,7 +95,7 @@ public class Util {
            return Base64.getEncoder().encodeToString(text.getBytes());
         }
         public static String decode(String text){
-            return new String(Base64.getDecoder().decode(text.getBytes()));
+            return new String(Base64.getDecoder().decode(text));
         }
     }
 

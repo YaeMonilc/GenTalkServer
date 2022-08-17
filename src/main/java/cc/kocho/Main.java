@@ -10,6 +10,7 @@ import cc.kocho.handler.WebSocket;
 import cc.kocho.server.ServerStart;
 import ch.qos.logback.classic.Logger;
 import com.google.gson.Gson;
+import com.mongodb.MongoClientOptions;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
@@ -38,8 +39,10 @@ public class Main {
 
     public static void main(String[] args) {
 
-        if(!args[0].equals(""))
-            Config.databaseUri.replaceAll("27017",args[0]);
+        if(args.length > 0) {
+            if (!args[0].equals(""))
+                Config.databaseUri.replaceAll("27017", args[0]);
+        }
 
         mongoClient = MongoClients.create(Config.databaseUri);
         MapperOptions mapperOptions = MapperOptions.builder()
@@ -60,7 +63,6 @@ public class Main {
         javalinConfig.enableCorsForAllOrigins();
         app._conf = javalinConfig;
         app.start(Config.Host, Config.port);
-
         ServerStart.start(new Http(),app);
         ServerStart.start(new WebSocket(),app);
     }
