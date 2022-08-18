@@ -1,6 +1,6 @@
 # GenTalkServer
 
-如果遇到了乱码可以添加 **"-Dfile.encoding=utf8"** 解决这个问题。
+**如果遇到了乱码可以添加 ```"-Dfile.encoding=utf8"``` 解决这个问题。**
 ***
 **目前实现的功能：**  
 1.账号系统：
