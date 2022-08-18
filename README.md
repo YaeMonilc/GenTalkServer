@@ -22,9 +22,9 @@
 >Config.java
 > >Host ：域名 （保持原样即可）  
 > >port ：端口 （酌情更改）  
-> >databaseUri ：Mongodb连接地址 （务必更改）
+> >databaseUri ：Mongodb连接地址 （务必更改）  
 > >databaseName ：数据库名称 （可以不改）  
-> >expirationTime ：令牌过期时间 （时间戳）
+> >expirationTime ：令牌过期时间 （时间戳）  
 
 ***
 
