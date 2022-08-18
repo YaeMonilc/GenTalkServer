@@ -60,6 +60,7 @@ public class Main {
         app = Javalin.create();
         JavalinConfig javalinConfig = new JavalinConfig();
         javalinConfig.asyncRequestTimeout = Long.MAX_VALUE;
+        javalinConfig.defaultContentType = "text/html; charset=utf-8";
         javalinConfig.enableCorsForAllOrigins();
         app._conf = javalinConfig;
         app.start(Config.Host, Config.port);

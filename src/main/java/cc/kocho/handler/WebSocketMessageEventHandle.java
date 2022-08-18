@@ -15,6 +15,7 @@ import dev.morphia.query.experimental.filters.Filters;
 import io.javalin.websocket.WsMessageContext;
 import org.slf4j.LoggerFactory;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 public class WebSocketMessageEventHandle {
