@@ -1,4 +1,4 @@
-# GenTalkServer
+# GenTalkServer(**<font color="#dd0000">该项目命名混乱请注意踩坑</font>**)
 
 ![GentalkServer](https://socialify.git.ci/YaeMonilc/GenTalkServer/image?description=1&font=Source%20Code%20Pro&forks=1&issues=1&language=1&owner=1&pattern=Floating%20Cogs&pulls=1&stargazers=1&theme=Light)
 
